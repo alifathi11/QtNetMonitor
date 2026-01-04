@@ -18,6 +18,7 @@ find_package(Qt6 REQUIRED COMPONENTS
 
 qt_add_executable(QtNetMonitorClient
     src/main.cpp
+    src/app/AuthController.cpp
     src/app/ApplicationController.cpp
     src/network/NetworkClient.cpp
     src/network/MessageProtocol.cpp
@@ -28,6 +29,10 @@ qt_add_qml_module(QtNetMonitorClient
     VERSION 1.0
     QML_FILES
         ui/main.qml
+        ui/pages/Dashboard.qml
+        ui/auth/AuthPage.qml
+        ui/auth/Login.qml
+        ui/auth/Signup.qml
 )
 
 target_link_libraries(QtNetMonitorClient

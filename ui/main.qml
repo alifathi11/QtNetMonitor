@@ -2,73 +2,37 @@ import QtQuick
 import QtQuick.Controls
 
 ApplicationWindow {
-    width: 600
-    height: 400 
+    id: root 
+    width: 800 
+    height: 600
     visible: true 
-    title: "QtNetMonitor Client"
 
-    Column {
-        anchors.centerIn: parent
-        spacing: 10
+    StackView {
+        id: mainStack 
+        anchors.fill: parent
+    } 
 
-        TextField {
-            id: hostField 
-            placeholderText: "Host"
-            text: "127.0.0.1"
+    Component.onCompleted: {
+        if (authController.loggedIn) {
+            mainStack.push("pages/Dashboard.qml");
+        } else {
+            mainStack.push("auth/AuthPage.qml");
+       }
+    }
+
+    Connections {
+        target: authController 
+        
+        function onLoginSuccess() {
+            mainStack.replace("pages/Dashboard.qml")
+        } 
+
+        function onSignupSuccess() {
+            mainStack.replace("pages/Dashboard.qml")
         }
 
-        TextField {
-            id: portField 
-            placeholderText: "Port"
-            text: "9000"
-        }
-
-        Button {
-            text: appController.connected ? "Disconnect" : "connect"
-            onClicked: {
-                if (appController.connected) 
-                    appController.disconnectFromServer()
-                else 
-                    appController.connectToServer(hostField.text, Number(portField.text))
-            
-            }
-        }
-
-        ScrollView {
-            width: 400
-            height: 200
-
-            background: Rectangle { 
-                color: "#202124"
-                radius: 6
-            }
-
-            TextArea {
-                id: logView
-                readOnly: true
-                wrapMode: Text.Wrap
-
-                background: Rectangle {
-                    color: "transparent"
-                }
-
-                onTextChanged: {
-                    if (!contentItem)
-                        return
-
-                    contentItem.contentY =
-                        contentItem.contentHeight - contentItem.height
-                }
-            }
-        }
-
-
-        Connections {
-            target: appController
-            function onLogMessage(msg) {
-                logView.text += msg + "\n"
-            }
-        }
+        // function onLogout() {
+        //     mainStack.replace("auth/AuthPage.qml")
+        // }
     }
 }
-

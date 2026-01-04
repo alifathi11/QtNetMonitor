@@ -25,5 +25,5 @@ private slots:
     void onErrorOccurred(QAbstractSocket::SocketError error);
 
 private:
-    QTcpSocket socket;
+    QTcpSocket m_socket;
 };

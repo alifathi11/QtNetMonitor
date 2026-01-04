@@ -4,13 +4,13 @@ ApplicationController::ApplicationController(QObject* parent)
     : QObject(parent)
 {
     connect(&client, &NetworkClient::connected, this, [this]() {
-        isConnected = true;
+        m_connected = true;
         emit connectedChanged();
         emit logMessage("Connected to server");
     });
 
     connect(&client, &NetworkClient::disconnected, this, [this]() {
-        isConnected = false;
+        m_connected = false;
         emit connectedChanged();
         emit logMessage("Disconnected from server");
     });
@@ -21,7 +21,7 @@ ApplicationController::ApplicationController(QObject* parent)
 }
 
 bool ApplicationController::connected() const  {
-    return isConnected;
+    return m_connected;
 }
 
 void ApplicationController::connectToServer(const QString& host, int port) {

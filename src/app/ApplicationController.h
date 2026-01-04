@@ -22,5 +22,5 @@ signals:
 
 private: 
     NetworkClient client;
-    bool isConnected{false};
+    bool m_connected{false};
 };
