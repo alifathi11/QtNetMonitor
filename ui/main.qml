@@ -38,7 +38,7 @@ ApplicationWindow {
             id: logView 
             width: 400 
             height: 200 
-            readOnly: true
+            readOnly: true 
         }
 
         Connections {
