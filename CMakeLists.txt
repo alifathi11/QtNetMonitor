@@ -14,6 +14,7 @@ find_package(Qt6 REQUIRED COMPONENTS
     Qml
     Quick
     Network
+    Sql
 )
 
 qt_add_executable(QtNetMonitorClient
@@ -23,6 +24,7 @@ qt_add_executable(QtNetMonitorClient
     src/controllers/ConfigController.cpp
     src/network/NetworkClient.cpp
     src/network/MessageProtocol.cpp
+    src/database/DatabaseManager.cpp
 )
 
 qt_add_qml_module(QtNetMonitorClient
@@ -46,4 +48,5 @@ target_link_libraries(QtNetMonitorClient
         Qt6::Qml
         Qt6::Quick
         Qt6::Network
+        Qt6::Sql 
 )

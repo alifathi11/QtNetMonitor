@@ -27,9 +27,13 @@ Page {
             width: 400
             height: 200
 
+            clip: true
+
             background: Rectangle {
                 color: "#202124"
                 radius: 6
+                border.width: 1
+                border.color: "#5f6368"
             }
 
             TextArea {

@@ -1,4 +1,6 @@
 #include "AuthController.h"
+#include "../database/DatabaseManager.h"
+#include <cmath>
 
 AuthController::AuthController(QObject* parent) 
     : QObject(parent) {}
@@ -16,18 +18,29 @@ void AuthController::signup(const QString& email, const QString& username, const
     // validate user data
 
     // store user data 
+    bool stored = DatabaseManager::instance().registerUser(email, username, password);
+    if (!stored) {
+        emit signupFailed("Failed to register user. Username or email may already exist.");
+        return;
+    }
 
     emit signupSuccess();
 }
 
 void AuthController::login(const QString& username, const QString& password) {
-    // for now we can just login with username: root, password: root 
-    if (username == "root" && password == "root") {
-        m_loggedIn = true;
-        emit loggedInChanged();
-        emit loginSuccess();
-    } else {
-        emit loginFailed("Invalid username or password.");
+    if (username.isEmpty() || password.isEmpty()) {
+        emit loginFailed("Username and password are required.");
+        return;
     }
+
+    bool loggedIn = DatabaseManager::instance().loginUser(username, password);
+    if (!loggedIn) {
+        emit loginFailed("Invalid username or password.");
+        return; 
+    } 
+
+    m_loggedIn = true;
+    emit loggedInChanged();
+    emit loginSuccess();
 }
 
