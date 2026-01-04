@@ -34,12 +34,34 @@ ApplicationWindow {
             }
         }
 
-        TextArea {
-            id: logView 
-            width: 400 
-            height: 200 
-            readOnly: true 
+        ScrollView {
+            width: 400
+            height: 200
+
+            background: Rectangle { 
+                color: "#202124"
+                radius: 6
+            }
+
+            TextArea {
+                id: logView
+                readOnly: true
+                wrapMode: Text.Wrap
+
+                background: Rectangle {
+                    color: "transparent"
+                }
+
+                onTextChanged: {
+                    if (!contentItem)
+                        return
+
+                    contentItem.contentY =
+                        contentItem.contentHeight - contentItem.height
+                }
+            }
         }
+
 
         Connections {
             target: appController
