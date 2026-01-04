@@ -1,5 +1,6 @@
+#pragma once 
+
 #include <QObject>
-#include <qtmetamacros.h>
 
 class AuthController : public QObject {
     Q_OBJECT 
@@ -16,9 +17,9 @@ public:
 
 signals: 
     void loginSuccess();
-    void loginFail(const QString& reason);
+    void loginFailed(const QString& reason);
     void signupSuccess();
-    void signupFail(const QString& reason);
+    void signupFailed(const QString& reason);
     void loggedInChanged();
 
 private: 

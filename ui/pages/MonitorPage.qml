@@ -1,33 +1,25 @@
-import QtQuick 
+import QtQuick
 import QtQuick.Controls
 
-Page {
-    title: "QtNetMonitor Client"
+import App.Network 1.0
 
+Page {
     Column {
         anchors.centerIn: parent
         spacing: 10
 
-        TextField {
-            id: hostField 
-            placeholderText: "Host"
-            text: "127.0.0.1"
-        }
-
-        TextField {
-            id: portField 
-            placeholderText: "Port"
-            text: "9000"
+        Label {
+            text: "Monitor"
+            font.bold: true
         }
 
         Button {
-            text: appController.connected ? "Disconnect" : "connect"
+            text: NetworkController.connected ? "Disconnect" : "Connect"
             onClicked: {
-                if (appController.connected) 
-                    appController.disconnectFromServer()
-                else 
-                    appController.connectToServer(hostField.text, Number(portField.text))
-            
+                if (NetworkController.connected)
+                    NetworkController.disconnectFromServer()
+                else
+                    NetworkController.connectToServer()
             }
         }
 
@@ -35,7 +27,7 @@ Page {
             width: 400
             height: 200
 
-            background: Rectangle { 
+            background: Rectangle {
                 color: "#202124"
                 radius: 6
             }
@@ -52,20 +44,17 @@ Page {
                 onTextChanged: {
                     if (!contentItem)
                         return
-
                     contentItem.contentY =
                         contentItem.contentHeight - contentItem.height
                 }
             }
         }
 
-
         Connections {
-            target: appController
+            target: NetworkController
             function onLogMessage(msg) {
                 logView.text += msg + "\n"
             }
         }
     }
 }
-

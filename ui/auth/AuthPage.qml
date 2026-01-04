@@ -10,7 +10,7 @@ Page {
 
     Component {
         id: loginComponent
-        Login {
+        LoginPage {
             onSignupRequested: {
                 authStack.push(signupComponent)
             }
@@ -19,7 +19,7 @@ Page {
 
     Component {
         id: signupComponent
-        Signup {
+        SignupPage {
             onLoginRequested: {
                 authStack.pop()
             }

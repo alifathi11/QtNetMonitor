@@ -1,6 +1,8 @@
 import QtQuick
 import QtQuick.Controls
 
+import App.Auth 1.0
+
 Page {
 
     title: "Login"
@@ -25,7 +27,7 @@ Page {
         Button {
             text: "Login"
             onClicked: {
-                authController.login(usernameField.text, passwordField.text)
+                AuthController.login(usernameField.text, passwordField.text)
             }
         }
 
@@ -44,8 +46,8 @@ Page {
     }
 
     Connections {
-        target: authController 
-        function onLoginFail(reason) {
+        target: AuthController 
+        function onLoginFailed(reason) {
             error.text = reason
         }
     }

@@ -1,6 +1,8 @@
 import QtQuick 
 import QtQuick.Controls
 
+import App.Auth 1.0
+
 ApplicationWindow {
     id: root 
     width: 800 
@@ -13,22 +15,22 @@ ApplicationWindow {
     } 
 
     Component.onCompleted: {
-        if (authController.loggedIn) {
-            mainStack.push("pages/Dashboard.qml");
+        if (AuthController.loggedIn) {
+            mainStack.push("pages/MainPage.qml");
         } else {
             mainStack.push("auth/AuthPage.qml");
        }
     }
 
     Connections {
-        target: authController 
+        target: AuthController 
         
         function onLoginSuccess() {
-            mainStack.replace("pages/Dashboard.qml")
+            mainStack.replace("pages/MainPage.qml")
         } 
 
         function onSignupSuccess() {
-            mainStack.replace("pages/Dashboard.qml")
+            mainStack.replace("pages/MainPage.qml")
         }
 
         // function onLogout() {

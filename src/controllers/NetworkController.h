@@ -1,19 +1,21 @@
 #pragma once 
-#include <QObject>
-#include <qtmetamacros.h>
-#include "../network/NetworkClient.h"
 
-class ApplicationController : public QObject {
+#include <QObject>
+#include "../network/NetworkClient.h"
+#include "src/controllers/ConfigController.h"
+
+class NetworkController : public QObject {
     Q_OBJECT
 
     Q_PROPERTY(bool connected READ connected NOTIFY connectedChanged);
 
 public:
-    explicit ApplicationController(QObject* parent = nullptr);
+    explicit NetworkController(ConfigController* config,
+                               QObject* parent = nullptr);
 
     bool connected() const;
     
-    Q_INVOKABLE void connectToServer(const QString& host, int port);
+    Q_INVOKABLE void connectToServer();
     Q_INVOKABLE void disconnectFromServer();
 
 signals:
@@ -23,4 +25,5 @@ signals:
 private: 
     NetworkClient client;
     bool m_connected{false};
+    ConfigController* m_config;
 };

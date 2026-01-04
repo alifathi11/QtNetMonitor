@@ -9,7 +9,7 @@ bool AuthController::loggedIn() const {
 
 void AuthController::signup(const QString& email, const QString& username, const QString& password) {
     if (email.isEmpty() || username.isEmpty() || password.isEmpty()) {
-        emit signupFail("All fields are required.");
+        emit signupFailed("All fields are required.");
         return;
     }
 
@@ -27,7 +27,7 @@ void AuthController::login(const QString& username, const QString& password) {
         emit loggedInChanged();
         emit loginSuccess();
     } else {
-        emit loginFail("Invalid username or password.");
+        emit loginFailed("Invalid username or password.");
     }
 }
 
