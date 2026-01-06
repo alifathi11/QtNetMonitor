@@ -1,6 +1,7 @@
 #pragma once 
 
 #include <QObject>
+#include "ProfileController.h"
 
 class AuthController : public QObject {
     Q_OBJECT 
@@ -8,7 +9,8 @@ class AuthController : public QObject {
     Q_PROPERTY(bool loggedIn READ loggedIn NOTIFY loggedInChanged);
 
 public: 
-    explicit AuthController(QObject* parent = nullptr);
+    explicit AuthController(ProfileController* profile,
+                            QObject* parent = nullptr);
 
     Q_INVOKABLE void signup(const QString& email, const QString& username, const QString& password);
     Q_INVOKABLE void login(const QString& username, const QString& password);
@@ -24,4 +26,5 @@ signals:
 
 private: 
     bool m_loggedIn{false};
+    ProfileController *m_profile;
 };

@@ -1,9 +1,10 @@
 #include "AuthController.h"
 #include "../database/DatabaseManager.h"
 #include <cmath>
+#include <optional>
 
-AuthController::AuthController(QObject* parent) 
-    : QObject(parent) {}
+AuthController::AuthController(ProfileController* profile, QObject* parent) 
+    : m_profile(profile), QObject(parent) {}
 
 bool AuthController::loggedIn() const {
     return m_loggedIn;
@@ -24,6 +25,12 @@ void AuthController::signup(const QString& email, const QString& username, const
         return;
     }
 
+    m_profile->setUsername(username);
+    m_profile->setEmail(email);
+    m_profile->setPassword(password);
+
+    m_loggedIn = true;
+    emit loggedInChanged();
     emit signupSuccess();
 }
 
@@ -38,6 +45,12 @@ void AuthController::login(const QString& username, const QString& password) {
         emit loginFailed("Invalid username or password.");
         return; 
     } 
+    
+    std::optional<QString> email = DatabaseManager::instance().getUserEmail(username);
+
+    m_profile->setUsername(username);
+    m_profile->setPassword(password);
+    m_profile->setEmail(email->isEmpty() ? "" : email.value());
 
     m_loggedIn = true;
     emit loggedInChanged();

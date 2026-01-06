@@ -22,6 +22,7 @@ qt_add_executable(QtNetMonitorClient
     src/controllers/AuthController.cpp
     src/controllers/NetworkController.cpp
     src/controllers/ConfigController.cpp
+    src/controllers/ProfileController.cpp
     src/network/NetworkClient.cpp
     src/network/MessageProtocol.cpp
     src/database/DatabaseManager.cpp

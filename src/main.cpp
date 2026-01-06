@@ -7,13 +7,14 @@
 #include "controllers/AuthController.h"
 #include "controllers/NetworkController.h"
 #include "controllers/ConfigController.h"
-
+#include "controllers/ProfileController.h"
 
 int main(int argc, char *argv[]) {
     QGuiApplication app(argc, argv);
 
-    auto* configController = new ConfigController();
-    auto* authController = new AuthController();
+    auto* profileController = new ProfileController();
+    auto* authController       = new AuthController(profileController);
+    auto* configController   = new ConfigController();
     auto* networkController = new NetworkController(configController);
 
     qmlRegisterSingletonInstance(
@@ -36,6 +37,14 @@ int main(int argc, char *argv[]) {
         "NetworkController",
         networkController
     );
+
+    qmlRegisterSingletonInstance(
+        "App.Profile",
+        1, 0,
+        "ProfileController",
+        profileController
+    );
+
 
 
     QQmlApplicationEngine engine;

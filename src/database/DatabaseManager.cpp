@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QStandardPaths>
 #include <QDir>
+#include <optional>
 #include <qdir.h>
 #include <qglobal.h>
 #include <qsqlerror.h>
@@ -70,4 +71,38 @@ bool DatabaseManager::loginUser(const QString& username, const QString& password
 
     QString storedPassword = query.value(0).toString();
     return storedPassword == password; // TODO: Compare hashed passwords 
+}
+
+bool DatabaseManager::updateUser(const QString& currentUsername, const QString& username, const QString& email, const QString& password) {
+    QSqlQuery query;
+    query.prepare("UPDATE users SET username = ?, email = ?, password = ? WHERE username = ?");
+    query.addBindValue(username);
+    query.addBindValue(email);
+    query.addBindValue(password); // TODO: Store hashed password 
+    query.addBindValue(currentUsername);
+    
+    if (!query.exec()) return false;
+    return query.numRowsAffected() > 0;
+}
+
+std::optional<QString> DatabaseManager::getUserEmail(const QString& username) {
+    QSqlQuery query; 
+    query.prepare("SELECT email FROM users WHERE username = ?");
+    query.addBindValue(username);
+    if (!query.exec() || !query.next()) {
+        return std::nullopt;
+    }
+
+    return std::make_optional(query.value(0).toString());
+}
+
+std::optional<QString> DatabaseManager::getUserPassword(const QString& username) {
+    QSqlQuery query; 
+    query.prepare("SELECT password FROM users WHERE username = ?");
+    query.addBindValue(username);
+    if (!query.exec() || !query.next()) {
+        return std::nullopt;
+    }
+    
+    return std::make_optional(query.value(0).toString());
 }

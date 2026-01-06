@@ -7,6 +7,10 @@ public:
 
     bool registerUser(const QString& email, const QString &username, const QString &password);
     bool loginUser(const QString &username, const QString &password);
+    bool updateUser(const QString& currentUsername, const QString& username, const QString& email, const QString& password);
+
+    std::optional<QString> getUserEmail(const QString& username);
+    std::optional<QString> getUserPassword(const QString& password);
 
 private:
     DatabaseManager();

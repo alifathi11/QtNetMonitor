@@ -17,6 +17,7 @@ public:
 
 signals: 
     void configChanged();
+    void configChangeFailed(const QString& reason);
     
 private: 
     QString m_host = "127.0.0.1";

@@ -2,7 +2,7 @@
 
 #include <QObject>
 #include "../network/NetworkClient.h"
-#include "src/controllers/ConfigController.h"
+#include "ConfigController.h"
 
 class NetworkController : public QObject {
     Q_OBJECT

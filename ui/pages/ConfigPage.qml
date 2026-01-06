@@ -52,12 +52,23 @@ Page {
             id: status
             color: "green"
         }
+
+        Text {
+            id: error 
+            color: "red"
+        }
     }
 
     Connections {
         target: ConfigController
         function onConfigChanged() {
             status.text = "Configuration saved successfully."
+            error.text  = "";
+        }
+
+        function onConfigChangeFailed(reason) {
+            status.text = "";
+            error.text  = reason;
         }
     }
 }
