@@ -1,6 +1,7 @@
 #pragma once 
 
 #include <QObject>
+#include <qtmetamacros.h>
 #include "ProfileController.h"
 
 class AuthController : public QObject {
@@ -14,6 +15,7 @@ public:
 
     Q_INVOKABLE void signup(const QString& email, const QString& username, const QString& password);
     Q_INVOKABLE void login(const QString& username, const QString& password);
+    Q_INVOKABLE void logout();
 
     bool loggedIn() const;
 
@@ -22,6 +24,7 @@ signals:
     void loginFailed(const QString& reason);
     void signupSuccess();
     void signupFailed(const QString& reason);
+    void userLoggedOut();
     void loggedInChanged();
 
 private: 

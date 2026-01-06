@@ -57,3 +57,14 @@ void AuthController::login(const QString& username, const QString& password) {
     emit loginSuccess();
 }
 
+
+void AuthController::logout() {
+
+    m_profile->setUsername(NULL);
+    m_profile->setPassword(NULL);
+    m_profile->setEmail(NULL);
+
+    m_loggedIn = false;
+    emit userLoggedOut();
+    emit loggedInChanged();
+}

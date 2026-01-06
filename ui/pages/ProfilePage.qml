@@ -1,47 +1,40 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Layouts
 
+import App.Auth    1.0
 import App.Profile 1.0
 
 Page {
     Column {
-        anchors.centerIn: parent 
-        spacing: 10 
+        spacing: 10
+        anchors.centerIn: parent
 
         Label {
             text: "User Profile"
             font.bold: true
         }
 
-        Row {
-            spacing: 5
+        GridLayout {
+            columns: 2
+            rowSpacing: 10
+            columnSpacing: 5
 
-            Label { text: "username: " }
-
+            Label { text: "Username:" }
             TextField {
                 id: usernameField
                 width: 200
                 text: ProfileController.username
             }
-        }
 
-        Row {
-            spacing: 5
-
-            Label { text: "email: " }
-
+            Label { text: "Email:" }
             TextField {
                 id: emailField
                 width: 200
                 text: ProfileController.email
             }
-        }
 
-        Row {
-            spacing: 5
-
-            Label { text: "password: " }
-
+            Label { text: "Password:" }
             TextField {
                 id: passwordField
                 width: 200
@@ -60,23 +53,15 @@ Page {
                 )
             }
         }
-
         Button {
             text: "Logout"
             onClicked: {
-                ProfileController.logout()
+                AuthController.logout()
             }
         }
 
-        Text {
-            id: status
-            color: "green"
-        }
-
-        Text {
-            id: error 
-            color: "red"
-        }
+        Text { id: status; color: "green" }
+        Text { id: error; color: "red" }
     }
 
     Connections {
@@ -85,11 +70,9 @@ Page {
             status.text = "Profile updated successfully."
             error.text  = ""
         }
-
         function onProfileChangeFailed(reason) {
             status.text = ""
-            error.text  = reason;
-        } 
+            error.text  = reason
+        }
     }
-
 }

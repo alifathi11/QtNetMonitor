@@ -33,8 +33,8 @@ ApplicationWindow {
             mainStack.replace("pages/MainPage.qml")
         }
 
-        // function onLogout() {
-        //     mainStack.replace("auth/AuthPage.qml")
-        // }
+        function onUserLoggedOut() {
+            mainStack.replace("auth/AuthPage.qml")
+        }
     }
 }
